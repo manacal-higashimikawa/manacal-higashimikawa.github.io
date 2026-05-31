@@ -1,0 +1,170 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans JP", sans-serif;
+  color: #20302b;
+  background: #f8f4e6;
+  line-height: 1.7;
+}
+
+.hero {
+  padding: 48px 20px 40px;
+  text-align: center;
+  background: linear-gradient(180deg, #e7fff5 0%, #f8f4e6 100%);
+}
+
+.badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid #38b48b;
+  color: #007d37;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+h1 {
+  margin: 18px 0 12px;
+  font-size: clamp(34px, 9vw, 58px);
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+}
+
+.lead {
+  max-width: 680px;
+  margin: 0 auto 24px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.main-btn,
+.reserve-btn {
+  display: inline-block;
+  width: min(100%, 360px);
+  padding: 15px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 800;
+}
+
+.main-btn {
+  background: #ff6f59;
+  color: white;
+  box-shadow: 0 8px 20px rgba(255, 111, 89, 0.25);
+}
+
+.section {
+  padding: 36px 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.section h2 {
+  text-align: center;
+  font-size: 27px;
+  margin: 0 0 22px;
+}
+
+.cards {
+  display: grid;
+  gap: 14px;
+}
+
+.card,
+.school,
+details {
+  background: white;
+  border-radius: 20px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.card {
+  font-weight: 700;
+  text-align: center;
+}
+
+.accent {
+  background: white;
+  border-radius: 28px;
+}
+
+.check-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 640px;
+}
+
+.check-list li {
+  padding: 10px 0 10px 34px;
+  position: relative;
+  font-weight: 700;
+}
+
+.check-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: #38b48b;
+  font-weight: 900;
+}
+
+.center {
+  text-align: center;
+  margin-top: -8px;
+}
+
+.school-list {
+  display: grid;
+  gap: 16px;
+}
+
+.school h3 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+.reserve-btn {
+  margin-top: 10px;
+  background: #007d37;
+  color: white;
+}
+
+details {
+  margin-bottom: 12px;
+}
+
+summary {
+  font-weight: 800;
+  cursor: pointer;
+}
+
+footer {
+  padding: 28px 20px;
+  text-align: center;
+  background: #20302b;
+  color: white;
+  font-size: 14px;
+}
+
+@media (min-width: 760px) {
+  .cards,
+  .school-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .school {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .school p {
+    flex: 1;
+  }
+}
