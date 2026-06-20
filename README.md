@@ -1,2 +1,3 @@
 # manacal-higashimikawa.github.io
-Manacal Higashimikawa event website
+
+東三河こどもプログラミングサマースクール2026 LP

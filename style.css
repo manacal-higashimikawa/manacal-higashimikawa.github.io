@@ -2,18 +2,28 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans JP", sans-serif;
   color: #20302b;
   background: #f8f4e6;
-  line-height: 1.7;
+  line-height: 1.75;
+}
+
+a {
+  color: inherit;
 }
 
 .hero {
-  padding: 48px 20px 40px;
+  padding: 42px 18px 36px;
   text-align: center;
-  background: linear-gradient(180deg, #e7fff5 0%, #f8f4e6 100%);
+  background:
+    radial-gradient(circle at 20% 10%, rgba(56,180,139,.25), transparent 30%),
+    linear-gradient(180deg, #e7fff5 0%, #f8f4e6 100%);
 }
 
 .badge {
@@ -23,88 +33,174 @@ body {
   background: #ffffff;
   border: 1px solid #38b48b;
   color: #007d37;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 14px;
 }
 
+.eyebrow {
+  margin: 18px 0 6px;
+  color: #007d37;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
 h1 {
-  margin: 18px 0 12px;
-  font-size: clamp(34px, 9vw, 58px);
-  line-height: 1.15;
+  margin: 8px 0 14px;
+  font-size: clamp(34px, 9vw, 62px);
+  line-height: 1.12;
   letter-spacing: 0.02em;
 }
 
 .lead {
-  max-width: 680px;
-  margin: 0 auto 24px;
+  max-width: 720px;
+  margin: 0 auto 20px;
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
+.hero-points {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 18px auto 22px;
+}
+
+.hero-points span {
+  background: #fff;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-weight: 800;
+  font-size: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.06);
+}
+
+.cta-box {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px;
+  background: rgba(255,255,255,.88);
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.cta-title {
+  margin: 0 0 12px;
+  font-weight: 900;
+}
+
+.quick-links,
+.school-nav {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr;
+}
+
+.quick-links a,
+.school-nav a,
 .main-btn,
 .reserve-btn {
   display: inline-block;
-  width: min(100%, 360px);
-  padding: 15px 18px;
+  padding: 14px 16px;
   border-radius: 999px;
   text-decoration: none;
   text-align: center;
-  font-weight: 800;
+  font-weight: 900;
+}
+
+.quick-links a,
+.school-nav a {
+  background: #007d37;
+  color: white;
 }
 
 .main-btn {
+  width: min(100%, 380px);
   background: #ff6f59;
   color: white;
   box-shadow: 0 8px 20px rgba(255, 111, 89, 0.25);
 }
 
+.reserve-btn {
+  width: 100%;
+  margin-top: 14px;
+  background: #007d37;
+  color: white;
+}
+
 .section {
-  padding: 36px 20px;
-  max-width: 960px;
+  padding: 38px 18px;
+  max-width: 1040px;
   margin: 0 auto;
 }
 
 .section h2 {
   text-align: center;
-  font-size: 27px;
+  font-size: 28px;
+  line-height: 1.35;
   margin: 0 0 22px;
 }
 
-.cards {
+.intro {
+  text-align: center;
+}
+
+.intro p {
+  max-width: 760px;
+  margin: 0 auto 12px;
+  font-weight: 600;
+}
+
+.cards,
+.course-grid,
+.price-grid,
+.benefit-list,
+.school-list {
   display: grid;
-  gap: 14px;
+  gap: 16px;
 }
 
 .card,
+.course,
+.price-card,
+.benefit-list article,
 .school,
-details {
+details,
+.box-note {
   background: white;
-  border-radius: 20px;
+  border-radius: 22px;
   padding: 18px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
 .card {
-  font-weight: 700;
+  font-weight: 800;
   text-align: center;
 }
 
 .accent {
   background: white;
-  border-radius: 28px;
+  border-radius: 30px;
+}
+
+.course h3,
+.price-card h3,
+.benefit-list h3,
+.school h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
 }
 
 .check-list {
   list-style: none;
   padding: 0;
-  margin: 0 auto;
-  max-width: 640px;
+  margin: 0;
 }
 
 .check-list li {
-  padding: 10px 0 10px 34px;
+  padding: 8px 0 8px 32px;
   position: relative;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .check-list li::before {
@@ -115,25 +211,116 @@ details {
   font-weight: 900;
 }
 
-.center {
+.note {
+  color: #5c665f;
+  font-size: 14px;
+  margin: 12px 0 0;
+}
+
+.center,
+.center-action {
   text-align: center;
-  margin-top: -8px;
 }
 
-.school-list {
-  display: grid;
-  gap: 16px;
+.center-action {
+  margin-top: 22px;
 }
 
-.school h3 {
-  margin: 0 0 8px;
-  font-size: 22px;
+.price-card {
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.reserve-btn {
-  margin-top: 10px;
-  background: #007d37;
+.price {
+  margin: 8px 0;
+  color: #007d37;
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.price span {
+  font-size: 18px;
+}
+
+.recommended {
+  border: 3px solid #ff6f59;
+}
+
+.ribbon {
+  position: absolute;
+  top: 14px;
+  right: -34px;
+  transform: rotate(35deg);
+  background: #ff6f59;
   color: white;
+  font-weight: 900;
+  padding: 5px 36px;
+  font-size: 13px;
+}
+
+.flow-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.flow-list li {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 12px;
+  align-items: start;
+  background: #fff;
+  border-radius: 18px;
+  padding: 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.flow-list span {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #38b48b;
+  color: white;
+  font-weight: 900;
+}
+
+.flow-list p {
+  margin: 0;
+  font-weight: 700;
+}
+
+.school-nav {
+  margin: 18px auto 24px;
+  max-width: 820px;
+}
+
+.school {
+  scroll-margin-top: 16px;
+}
+
+.school-photo,
+.map-placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 150px;
+  border: 2px dashed #b7c6be;
+  border-radius: 18px;
+  background: #f2f7f4;
+  color: #637069;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.map-placeholder {
+  min-height: 180px;
+  margin-top: 12px;
 }
 
 details {
@@ -141,8 +328,14 @@ details {
 }
 
 summary {
-  font-weight: 800;
+  font-weight: 900;
   cursor: pointer;
+}
+
+.final-cta {
+  text-align: center;
+  background: #e7fff5;
+  border-radius: 30px;
 }
 
 footer {
@@ -153,8 +346,28 @@ footer {
   font-size: 14px;
 }
 
-@media (min-width: 760px) {
-  .cards,
+footer a {
+  display: inline-block;
+  margin-top: 8px;
+  color: #fff;
+}
+
+@media (min-width: 720px) {
+  .quick-links,
+  .school-nav {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .course-grid,
+  .price-grid,
+  .benefit-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .school-list {
     grid-template-columns: repeat(3, 1fr);
   }
