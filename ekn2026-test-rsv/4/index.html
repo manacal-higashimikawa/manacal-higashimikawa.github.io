@@ -89,57 +89,83 @@
       padding-left: 10px;
     }
 
-    .slot {
+    .calendar-note {
+      font-size: 13px;
+      color: #666;
+      margin: -4px 0 12px;
+    }
+
+    .calendar-wrap {
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 18px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(112px, 1fr));
+      gap: 10px;
+      min-width: 620px;
+    }
+
+    .day-card {
       background: #fff;
       border: 1px solid #dfe8f3;
       border-radius: 16px;
-      padding: 14px;
-      margin-bottom: 12px;
+      padding: 10px;
       box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
     }
 
-    .slot-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .date-time {
+    .day-title {
+      text-align: center;
       font-weight: 900;
-      font-size: 17px;
-      line-height: 1.45;
+      color: #005bac;
+      background: #e5f6ff;
+      border-radius: 12px;
+      padding: 8px 4px;
+      margin-bottom: 10px;
+      line-height: 1.35;
     }
 
-    .lesson-time {
-      font-size: 14px;
-      color: #555;
-      font-weight: 700;
+    .day-date {
+      font-size: 16px;
     }
 
-    .status {
-      display: inline-block;
-      font-weight: 800;
-      padding: 4px 10px;
-      border-radius: 999px;
+    .day-week {
       font-size: 13px;
-      white-space: nowrap;
+      color: #555;
     }
 
-    .ok {
+    .time-btn {
+      width: 100%;
+      border-radius: 12px;
+      padding: 9px 4px;
+      margin-bottom: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 900;
+      cursor: pointer;
+      line-height: 1.35;
+    }
+
+    .time-btn.ok {
       background: #e8f8ee;
       color: #168a3a;
+      border: 1px solid #bfe8ce;
     }
 
-    .few {
+    .time-btn.few {
       background: #fff4cf;
       color: #a66d00;
+      border: 1px solid #ffe1a3;
     }
 
-    .full {
+    .time-btn.full {
       background: #eeeeee;
       color: #777777;
+      border: 1px solid #dddddd;
+      cursor: not-allowed;
     }
 
     .btn {
@@ -160,12 +186,6 @@
 
     .btn.blue {
       background: #005bac;
-    }
-
-    .btn.disabled {
-      background: #bbbbbb;
-      pointer-events: none;
-      cursor: not-allowed;
     }
 
     .form-area {
@@ -277,19 +297,23 @@
 
     <section class="step">
       <strong>申込み方法</strong><br>
-      ① 希望日の「この日で申し込む」を押す<br>
+      ① 希望日時をタップする<br>
       ② 保護者氏名・お子さま氏名・学年・電話番号を入力する<br>
       ③ 申込み文をコピーする<br>
       ④ 右上の「×」でこの画面を閉じて、LINEトークに貼り付けて送信する
     </section>
 
     <div class="week-title">第1週</div>
-
-    <div id="slotsWeek1"></div>
+    <div class="calendar-note">横にスクロールして日程を確認できます。</div>
+    <div class="calendar-wrap">
+      <div id="slotsWeek1" class="calendar-grid"></div>
+    </div>
 
     <div class="week-title">第2週</div>
-
-    <div id="slotsWeek2"></div>
+    <div class="calendar-note">横にスクロールして日程を確認できます。</div>
+    <div class="calendar-wrap">
+      <div id="slotsWeek2" class="calendar-grid"></div>
+    </div>
 
     <section id="formArea" class="form-area">
       <div id="selectedDate" class="selected"></div>
@@ -338,91 +362,140 @@
     let selectedSlot = "";
 
     const week1 = [
-      { date: "7月21日", time: "16:00〜17:00", status: "ok" },
-      { date: "7月21日", time: "17:00〜18:00", status: "ok" },
-      { date: "7月21日", time: "18:00〜19:00", status: "ok" },
-      { date: "7月21日", time: "19:00〜20:00", status: "ok" },
-
-      { date: "7月22日", time: "16:00〜17:00", status: "ok" },
-      { date: "7月22日", time: "17:00〜18:00", status: "full" },
-      { date: "7月22日", time: "18:00〜19:00", status: "few" },
-      { date: "7月22日", time: "19:00〜20:00", status: "ok" },
-
-      { date: "7月23日", time: "16:00〜17:00", status: "ok" },
-      { date: "7月23日", time: "17:00〜18:00", status: "ok" },
-      { date: "7月23日", time: "18:00〜19:00", status: "ok" },
-      { date: "7月23日", time: "19:00〜20:00", status: "ok" },
-
-      { date: "7月24日", time: "16:00〜17:00", status: "ok" },
-      { date: "7月24日", time: "17:00〜18:00", status: "ok" },
-      { date: "7月24日", time: "18:00〜19:00", status: "ok" },
-      { date: "7月24日", time: "19:00〜20:00", status: "ok" },
-
-      { date: "7月25日", time: "15:00〜16:00", status: "ok" }
+      {
+        date: "7月21日",
+        week: "火",
+        times: [
+          { time: "16:00〜17:00", timeLabel: "16時〜", status: "ok" },
+          { time: "17:00〜18:00", timeLabel: "17時〜", status: "ok" },
+          { time: "18:00〜19:00", timeLabel: "18時〜", status: "ok" },
+          { time: "19:00〜20:00", timeLabel: "19時〜", status: "ok" }
+        ]
+      },
+      {
+        date: "7月22日",
+        week: "水",
+        times: [
+          { time: "16:00〜17:00", timeLabel: "16時〜", status: "ok" },
+          { time: "17:00〜18:00", timeLabel: "17時〜", status: "full" },
+          { time: "18:00〜19:00", timeLabel: "18時〜", status: "few" },
+          { time: "19:00〜20:00", timeLabel: "19時〜", status: "ok" }
+        ]
+      },
+      {
+        date: "7月23日",
+        week: "木",
+        times: [
+          { time: "16:00〜17:00", timeLabel: "16時〜", status: "ok" },
+          { time: "17:00〜18:00", timeLabel: "17時〜", status: "ok" },
+          { time: "18:00〜19:00", timeLabel: "18時〜", status: "ok" },
+          { time: "19:00〜20:00", timeLabel: "19時〜", status: "ok" }
+        ]
+      },
+      {
+        date: "7月24日",
+        week: "金",
+        times: [
+          { time: "16:00〜17:00", timeLabel: "16時〜", status: "ok" },
+          { time: "17:00〜18:00", timeLabel: "17時〜", status: "ok" },
+          { time: "18:00〜19:00", timeLabel: "18時〜", status: "ok" },
+          { time: "19:00〜20:00", timeLabel: "19時〜", status: "ok" }
+        ]
+      },
+      {
+        date: "7月25日",
+        week: "土",
+        times: [
+          { time: "15:00〜16:00", timeLabel: "15時〜", status: "ok" }
+        ]
+      }
     ];
 
     const week2 = [
-      { date: "7月28日", time: "16:00〜17:00", status: "ok" },
-      { date: "7月28日", time: "17:00〜18:00", status: "ok" },
-      { date: "7月28日", time: "18:00〜19:00", status: "ok" },
-      { date: "7月28日", time: "19:00〜20:00", status: "ok" },
-
-      { date: "7月29日", time: "16:00〜17:00", status: "ok" },
-      { date: "7月29日", time: "17:00〜18:00", status: "full" },
-      { date: "7月29日", time: "18:00〜19:00", status: "few" },
-      { date: "7月29日", time: "19:00〜20:00", status: "ok" },
-
-      { date: "7月30日", time: "16:00〜17:00", status: "ok" },
-      { date: "7月30日", time: "17:00〜18:00", status: "ok" },
-      { date: "7月30日", time: "18:00〜19:00", status: "ok" },
-      { date: "7月30日", time: "19:00〜20:00", status: "ok" },
-
-      { date: "7月31日", time: "16:00〜17:00", status: "ok" },
-      { date: "7月31日", time: "17:00〜18:00", status: "ok" },
-      { date: "7月31日", time: "18:00〜19:00", status: "ok" },
-      { date: "7月31日", time: "19:00〜20:00", status: "ok" },
-
-      { date: "8月1日", time: "15:00〜16:00", status: "ok" }
+      {
+        date: "7月28日",
+        week: "火",
+        times: [
+          { time: "16:00〜17:00", timeLabel: "16時〜", status: "ok" },
+          { time: "17:00〜18:00", timeLabel: "17時〜", status: "ok" },
+          { time: "18:00〜19:00", timeLabel: "18時〜", status: "ok" },
+          { time: "19:00〜20:00", timeLabel: "19時〜", status: "ok" }
+        ]
+      },
+      {
+        date: "7月29日",
+        week: "水",
+        times: [
+          { time: "16:00〜17:00", timeLabel: "16時〜", status: "ok" },
+          { time: "17:00〜18:00", timeLabel: "17時〜", status: "full" },
+          { time: "18:00〜19:00", timeLabel: "18時〜", status: "few" },
+          { time: "19:00〜20:00", timeLabel: "19時〜", status: "ok" }
+        ]
+      },
+      {
+        date: "7月30日",
+        week: "木",
+        times: [
+          { time: "16:00〜17:00", timeLabel: "16時〜", status: "ok" },
+          { time: "17:00〜18:00", timeLabel: "17時〜", status: "ok" },
+          { time: "18:00〜19:00", timeLabel: "18時〜", status: "ok" },
+          { time: "19:00〜20:00", timeLabel: "19時〜", status: "ok" }
+        ]
+      },
+      {
+        date: "7月31日",
+        week: "金",
+        times: [
+          { time: "16:00〜17:00", timeLabel: "16時〜", status: "ok" },
+          { time: "17:00〜18:00", timeLabel: "17時〜", status: "ok" },
+          { time: "18:00〜19:00", timeLabel: "18時〜", status: "ok" },
+          { time: "19:00〜20:00", timeLabel: "19時〜", status: "ok" }
+        ]
+      },
+      {
+        date: "8月1日",
+        week: "土",
+        times: [
+          { time: "15:00〜16:00", timeLabel: "15時〜", status: "ok" }
+        ]
+      }
     ];
 
-    function statusLabel(status) {
-      if (status === "full") return '<span class="status full">満席</span>';
-      if (status === "few") return '<span class="status few">残りわずか</span>';
-      return '<span class="status ok">空きあり</span>';
+    function statusText(status) {
+      if (status === "full") return "満席";
+      if (status === "few") return "残りわずか";
+      return "空きあり";
     }
 
-    function renderSlots(slots, targetId) {
+    function renderSlots(days, targetId) {
       const target = document.getElementById(targetId);
-      target.innerHTML = slots.map(slot => {
-        const slotText = `${slot.date} ${slot.time}`;
 
-        if (slot.status === "full") {
+      target.innerHTML = days.map(day => {
+        const buttons = day.times.map(item => {
+          const slotText = `${day.date} ${item.time}`;
+
+          if (item.status === "full") {
+            return `
+              <button class="time-btn full" disabled>
+                ${item.timeLabel}<br>満席
+              </button>
+            `;
+          }
+
           return `
-            <section class="slot">
-              <div class="slot-row">
-                <div>
-                  <div class="date-time">${slot.date}</div>
-                  <div class="lesson-time">${slot.time}</div>
-                </div>
-                ${statusLabel(slot.status)}
-              </div>
-              <button class="btn disabled" disabled>満席です</button>
-            </section>
+            <button class="time-btn ${item.status}" onclick="selectSlot('${slotText}')">
+              ${item.timeLabel}<br>${statusText(item.status)}
+            </button>
           `;
-        }
+        }).join("");
 
         return `
-          <section class="slot">
-            <div class="slot-row">
-              <div>
-                <div class="date-time">${slot.date}</div>
-                <div class="lesson-time">${slot.time}</div>
-              </div>
-              ${statusLabel(slot.status)}
+          <section class="day-card">
+            <div class="day-title">
+              <div class="day-date">${day.date}</div>
+              <div class="day-week">${day.week}</div>
             </div>
-            <button class="btn" onclick="selectSlot('${slotText}')">
-              この日で申し込む
-            </button>
+            ${buttons}
           </section>
         `;
       }).join("");
@@ -430,6 +503,7 @@
 
     function selectSlot(slot) {
       selectedSlot = slot;
+
       document.getElementById("selectedDate").textContent =
         "選択中の初回希望日：" + selectedSlot;
 
