@@ -62,7 +62,8 @@
     }
 
     .notice,
-    .step {
+    .step,
+    .schedule-info {
       background: #fff;
       border: 1px solid #e0e6ef;
       border-radius: 14px;
@@ -76,8 +77,23 @@
       border-color: #ffe1a3;
     }
 
-    .step strong {
+    .step strong,
+    .schedule-info strong {
       color: #a66d00;
+    }
+
+    .schedule-info {
+      background: #f8fcff;
+      border-color: #cfe8ff;
+    }
+
+    .schedule-info ul {
+      margin: 8px 0 0 1.1em;
+      padding: 0;
+    }
+
+    .schedule-info li {
+      margin-bottom: 4px;
     }
 
     .week-title {
@@ -239,7 +255,7 @@
     }
 
     #applicationMessage {
-      min-height: 300px;
+      min-height: 340px;
       background: #f9fbfd;
       white-space: pre-wrap;
     }
@@ -291,8 +307,23 @@
 
     <section class="notice">
       初回希望日を選んでください。<br>
-      すべて1時間レッスンです。<br>
+      表示されている日時はすべて1時間レッスンです。<br>
       この時点では予約確定ではありません。担当者からの返信をもって予約確定となります。
+    </section>
+
+    <section class="schedule-info">
+      <strong>2回目以降の日程について</strong><br>
+      このページでは、まず初回希望日をお選びください。<br>
+      2回目以降の日程は、担当者からの返信後にLINEで個別に調整します。<br><br>
+      ご都合に合わせて、次のような受講パターンも相談できます。
+      <ul>
+        <li>短期集中で、2時間ずつ2回で進める</li>
+        <li>1週間に4回まとめて受講する</li>
+        <li>2週間で4回受講する</li>
+        <li>毎週同じ曜日・同じ時間に通う</li>
+        <li>送迎の都合に合わせて、空いている日時から選ぶ</li>
+      </ul>
+      ご希望がある場合は、下の「質問・連絡事項」にご入力ください。
     </section>
 
     <section class="step">
@@ -300,7 +331,8 @@
       ① 希望日時をタップする<br>
       ② 保護者氏名・お子さま氏名・学年・電話番号を入力する<br>
       ③ 申込み文をコピーする<br>
-      ④ 右上の「×」でこの画面を閉じて、LINEトークに貼り付けて送信する
+      ④ 右上の「×」でこの画面を閉じる、または左下のトークを出すアイコンをタップしてLINEトークに戻る<br>
+      ⑤ LINEのトーク入力欄に貼り付けて送信する
     </section>
 
     <div class="week-title">第1週</div>
@@ -330,6 +362,9 @@
       <label for="phone">電話番号</label>
       <input id="phone" type="tel" placeholder="例：090-0000-0000" oninput="updateMessage()">
 
+      <label for="secondSchedule">2回目以降の日程希望</label>
+      <textarea id="secondSchedule" placeholder="例：毎週火曜日の17時希望、短期集中で進めたい、送迎の都合に合わせたい など" oninput="updateMessage()"></textarea>
+
       <label for="note">質問・連絡事項</label>
       <textarea id="note" placeholder="ご質問などがあればご入力ください" oninput="updateMessage()"></textarea>
 
@@ -341,12 +376,12 @@
       </button>
 
       <div id="copyResult" class="copy-result">
-        コピーしました。右上の「×」をタップしてこの画面を閉じ、LINEトークに貼り付けて送信してください。
+        コピーしました。右上の「×」でこの画面を閉じるか、左下のトークを出すアイコンをタップしてLINEトークに戻り、貼り付けて送信してください。
       </div>
 
       <div class="close-guide">
         <strong>コピー後の操作</strong><br>
-        右上の「×」をタップしてこの画面を閉じてください。<br>
+        右上の「×」をタップしてこの画面を閉じるか、左下のトークを出すアイコンをタップしてLINEトークに戻ってください。<br>
         その後、LINEのトーク入力欄に貼り付けて送信してください。
       </div>
     </section>
@@ -523,6 +558,7 @@
       const childName = value("childName");
       const grade = value("grade");
       const phone = value("phone");
+      const secondSchedule = value("secondSchedule");
       const note = value("note");
 
       const message =
@@ -536,8 +572,14 @@
 お子さま氏名：${childName}
 学年：${grade}
 電話番号：${phone}
-質問・連絡事項：${note || "なし"}
 
+2回目以降の日程希望：
+${secondSchedule || "個別に相談したいです。"}
+
+質問・連絡事項：
+${note || "なし"}
+
+※2回目以降の日程はLINEで個別に調整します。
 ※担当者からの返信をもって予約確定となります。`;
 
       document.getElementById("applicationMessage").value = message;
